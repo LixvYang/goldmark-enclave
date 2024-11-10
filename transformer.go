@@ -57,8 +57,13 @@ func (a *astTransformer) Transform(node *ast.Document, reader text.Reader, pc pa
 			oid = u.String()
 			provider = EnclaveProviderMixinDiscuss
 		} else if strings.Contains(u.String(), "betxin") {
-			oid = u.String()
-			provider = EnclaveProviderMixinDiscuss
+			// 检查 url 里面有 video 的后缀 例如 mov mp4 等等
+			ext := strings.ToLower(strings.TrimPrefix(u.Path, "."))
+			if strings.Contains(ext, "mp4") || strings.Contains(ext, "mov") || strings.Contains(ext, "avi") || strings.Contains(ext, "wmv") || strings.Contains(ext, "flv") || strings.Contains(ext, "webm") || strings.Contains(ext, "mkv") {
+				oid = u.String()
+				provider = EnclaveProviderMixinDiscuss
+			}
+
 		} else if u.Host == "youtu.be" {
 			// this is also a youtube video: https://youtu.be/{vid}
 			provider = EnclaveProviderYouTube
