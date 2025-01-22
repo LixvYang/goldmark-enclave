@@ -49,10 +49,15 @@ func (a *astTransformer) Transform(node *ast.Document, reader text.Reader, pc pa
 		theme := "light"
 		provider := ""
 		params := map[string]string{}
+		ext := strings.ToLower(strings.TrimPrefix(u.Path, "."))
 		if u.Host == "www.youtube.com" && u.Path == "/watch" {
 			// this is a youtube video: https://www.youtube.com/watch?v={vid}
 			provider = EnclaveProviderYouTube
 			oid = u.Query().Get("v")
+		} else if strings.Contains(ext, "mp4") || strings.Contains(ext, "mov") || strings.Contains(ext, "avi") || strings.Contains(ext, "wmv") || strings.Contains(ext, "flv") || strings.Contains(ext, "webm") || strings.Contains(ext, "mkv") {
+			// 检查 url 里面有 video 的后缀 例如 mov mp4 等等
+			oid = u.String()
+			provider = EnclaveProviderMixinDiscuss
 		} else if strings.Contains(u.String(), "uploads.discuss.mixin.one") {
 			oid = u.String()
 			provider = EnclaveProviderMixinDiscuss

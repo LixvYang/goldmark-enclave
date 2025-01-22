@@ -20,9 +20,18 @@ import (
 	"github.com/yuin/goldmark/util"
 )
 
+/*
+![](https://discuss.mixin.one/uploads/post/5nn8Kd4aJmY.mp4)
+# hello
+![](https://discuss.mixin.one/uploads/post/5nn8Kd4aJmY.png)
+![](https://discuss.mixin.one/uploads/post/5nn8Kd4aJmY.jpeg)
+*/
 func main() {
-	source := `
-`
+	source := `![](https://discuss.mixin.one/uploads/post/5nn8Kd4aJmY.jpg)
+	
+![](https://discuss.mixin.one/uploads/post/5nn8Kd4aJmY.mp4)
+
+# hello world`
 	html := Markdown2HTML(source)
 	fmt.Println(html)
 }
